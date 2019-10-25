@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "projects": {
+    "my-pad": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/my-pad",
+      "sourceRoot": "apps/my-pad/src",
+      "prefix": "pond",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/my-pad",
+            "index": "apps/my-pad/src/index.html",
+            "main": "apps/my-pad/src/main.ts",
+            "polyfills": "apps/my-pad/src/polyfills.ts",
+            "tsConfig": "apps/my-pad/tsconfig.app.json",
+            "aot": false,
+            "assets": ["apps/my-pad/src/favicon.ico", "apps/my-pad/src/assets"],
+            "styles": ["apps/my-pad/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/my-pad/src/environments/environment.ts",
+                  "with": "apps/my-pad/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "my-pad:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "my-pad:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "my-pad:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/my-pad/tsconfig.app.json",
+              "apps/my-pad/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/my-pad/**"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/my-pad/src/test.ts",
+            "tsConfig": "apps/my-pad/tsconfig.spec.json",
+            "karmaConfig": "apps/my-pad/karma.conf.js",
+            "polyfills": "apps/my-pad/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        }
+      }
+    },
+    "my-pad-e2e": {
+      "root": "apps/my-pad-e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/my-pad-e2e/protractor.conf.js",
+            "devServerTarget": "my-pad:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "my-pad:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/my-pad-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**", "!apps/my-pad-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "karma",
+      "e2eTestRunner": "protractor"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "karma"
+    }
+  },
+  "defaultProject": "my-pad"
+}
